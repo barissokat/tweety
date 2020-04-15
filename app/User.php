@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasMany(Tweet::class)->latest();
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
     public function getAvatarAttribute($value)
     {
         return $value ? Storage::disk('public')->url($value) : '/images/default-avatar.png';
@@ -64,7 +69,9 @@ class User extends Authenticatable
 
         return Tweet::whereIn('user_id', $follows)
             ->orWhere('user_id', $this->id)
-            ->latest()->paginate(25);
+            ->withLikes()
+            ->orderByDesc('id')
+            ->paginate(25);
     }
 
     public function path($append = '')

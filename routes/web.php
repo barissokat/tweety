@@ -36,6 +36,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/profiles/{user:username}', ['as' => 'profile', 'uses' => 'ProfileController@show']);
 
+
+Route::post('/tweets/{tweet}/like', ['as' => 'tweets.like', 'uses' => 'LikeController@store']);
+Route::delete('/tweets/{tweet}/dislike', ['as' => 'tweets.dislike', 'uses' => 'LikeController@destroy']);
+
 // Route::get('/tweets/create', ['as' => 'tweets.create', 'uses' => 'TweetController@create']);
 // Route::get('/tweets/{tweet}', ['as' => 'tweets.show', 'uses' => 'TweetController@show']);
 // Route::get('/tweets/{tweet}/edit', ['as' => 'tweets.edit', 'uses' => 'TweetController@edit']);
